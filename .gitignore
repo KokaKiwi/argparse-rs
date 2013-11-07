@@ -1,0 +1,4 @@
+# Build stuff
+/.rust_build
+/lib
+/example
