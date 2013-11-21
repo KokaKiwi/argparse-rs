@@ -9,3 +9,13 @@
 #[license = "MIT"];
 
 #[crate_type = "lib"];
+
+pub use parser::ArgumentParser;
+
+pub mod parser;
+pub mod arg;
+
+pub mod err;
+
+pub mod result;
+pub mod value;
