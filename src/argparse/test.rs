@@ -142,3 +142,13 @@ fn test_positional_int()
     let args = parse_args!(parser: "32");
     assert_eq!(args.get::<int>("pos"), 32);
 }
+
+#[test]
+#[should_fail]
+fn test_positional_int_bad_format()
+{
+    let mut parser = ArgumentParser::new();
+    parser.add_argument(create_arg!("pos"; ty = ArgTyInteger));
+
+    parse_args!(parser: "toto");
+}

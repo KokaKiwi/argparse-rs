@@ -12,8 +12,10 @@
 
 pub use parser::ArgumentParser;
 
-pub mod parser;
+mod parser;
 pub mod arg;
+
+pub mod format;
 
 pub mod err;
 

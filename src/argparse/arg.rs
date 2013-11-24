@@ -39,7 +39,8 @@ impl<'self> Argument<'self>
         {
             arg.opts.default = Some(value::ArgValBool(false));
         }
-        if arg.is_positional()
+
+        if arg.is_positional() && arg.opts.default == None
         {
             arg.opts.required = true;
         }

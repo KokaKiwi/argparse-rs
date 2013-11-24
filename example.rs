@@ -19,7 +19,7 @@ fn main_test(raw_args: &[~str])
     let mut parser = ArgumentParser::new();
 
     let opts = ~[
-        create_arg!("-h", "--help"; ty = ArgTyBool),
+        create_arg!("-h", "--help"; ty = ArgTyBool, help = Some("Show this help and exit.")),
         create_arg!("-S", "--source"),
         create_arg!("filename"),
         create_arg!("count"; ty = ArgTyInteger, default = Some(ArgValInteger(0))),

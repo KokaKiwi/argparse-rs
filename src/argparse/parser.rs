@@ -2,10 +2,14 @@ use arg;
 use result;
 use err;
 use value;
+use format::HelpFormatter;
+use format::default::DefaultHelpFormatter;
 
 pub struct ArgumentParser<'self>
 {
     args: ~[arg::Argument<'self>],
+
+    description: Option<&'self str>,
 }
 
 struct ArgumentResults
@@ -20,6 +24,8 @@ impl<'self> ArgumentParser<'self>
     {
         ArgumentParser {
             args: ~[],
+
+            description: None,
         }
     }
 
@@ -87,28 +93,31 @@ impl<'self> ArgumentParser<'self>
             }
         }
 
-        // Check missing args
-        for arg in self.args.iter()
+        // Check missing args if there is no "--help" or "-h" argument
+        if !results.has("help")
         {
-            let names = arg.extract_names();
-            let name = names[0].to_owned();
-
-            if !results.has(name)
+            for arg in self.args.iter()
             {
-                match arg.opts.default
-                {
-                    Some(ref value) => {
-                        let result = result::ArgumentResult {
-                            names: names,
-                            value: value.clone(),
-                        };
+                let names = arg.extract_names();
+                let name = names[0].to_owned();
 
-                        results.list.push(result);
-                    }
-                    None => {
-                        if arg.opts.required
-                        {
-                            return Err(err::MissingArgument(arg.values.clone()));
+                if !results.has(name)
+                {
+                    match arg.opts.default
+                    {
+                        Some(ref value) => {
+                            let result = result::ArgumentResult {
+                                names: names,
+                                value: value.clone(),
+                            };
+
+                            results.list.push(result);
+                        }
+                        None => {
+                            if arg.opts.required
+                            {
+                                return Err(err::MissingArgument(arg.values.clone()));
+                            }
                         }
                     }
                 }
@@ -240,9 +249,28 @@ impl<'self> ArgumentParser<'self>
         }
     }
 
+    pub fn print_usage(&self)
+    {
+        println(self.get_usage());
+    }
+
+    pub fn get_usage(&self) -> ~str
+    {
+        let formatter = DefaultHelpFormatter;
+
+        formatter.format_usage(self)
+    }
+
     pub fn print_help(&self)
     {
+        println(self.get_help());
+    }
 
+    pub fn get_help(&self) -> ~str
+    {
+        let formatter = DefaultHelpFormatter;
+
+        formatter.format_help(self)
     }
 }
 
