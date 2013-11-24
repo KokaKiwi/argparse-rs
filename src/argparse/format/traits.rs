@@ -17,6 +17,15 @@ pub trait HelpFormatter
         let mut lines = ~[];
 
         lines.push(self.format_usage(parser));
+
+        match parser.description
+        {
+            Some(s) => {
+                lines.push(format!("  {}", s));
+            }
+            None => {}
+        }
+
         lines.push(~"");
         lines.push(~"Options:");
 

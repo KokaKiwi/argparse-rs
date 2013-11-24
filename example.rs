@@ -17,6 +17,7 @@ mod macros;
 fn main_test(raw_args: &[~str])
 {
     let mut parser = ArgumentParser::new();
+    parser.description = Some("Example!");
 
     let opts = ~[
         create_arg!("-h", "--help"; ty = ArgTyBool, help = Some("Show this help and exit.")),
