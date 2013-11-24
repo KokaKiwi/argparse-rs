@@ -21,8 +21,8 @@ fn main_test(raw_args: &[~str])
 
     let opts = ~[
         create_arg!("-h", "--help"; ty = ArgTyBool, help = Some("Show this help and exit.")),
-        create_arg!("-S", "--source"),
-        create_arg!("filename"),
+        create_arg!("-S", "--source"; required = true, help = Some("A small option.")),
+        create_arg!("filename"; help = Some("Hello file!")),
         create_arg!("count"; ty = ArgTyInteger, default = Some(ArgValInteger(0))),
     ];
     parser.add_arguments(opts);
