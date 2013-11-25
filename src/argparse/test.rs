@@ -152,3 +152,46 @@ fn test_positional_int_bad_format()
 
     parse_args!(parser: "toto");
 }
+
+#[test]
+fn test_multiple_small_opts()
+{
+    let mut parser = ArgumentParser::new();
+
+    let opts = ~[
+        create_arg!("-a"; ty = ArgTyBool),
+        create_arg!("-b"; ty = ArgTyBool),
+        create_arg!("-c"; ty = ArgTyBool),
+        create_arg!("-d"; ty = ArgTyBool),
+        create_arg!("-e"; ty = ArgTyBool),
+    ];
+    parser.add_arguments(opts);
+
+    let args = parse_args!(parser);
+    assert_eq!(args.get::<bool>("a"), false);
+    assert_eq!(args.get::<bool>("b"), false);
+    assert_eq!(args.get::<bool>("c"), false);
+    assert_eq!(args.get::<bool>("d"), false);
+    assert_eq!(args.get::<bool>("e"), false);
+
+    let args = parse_args!(parser: "-a", "-b", "-c", "-d", "-e");
+    assert_eq!(args.get::<bool>("a"), true);
+    assert_eq!(args.get::<bool>("b"), true);
+    assert_eq!(args.get::<bool>("c"), true);
+    assert_eq!(args.get::<bool>("d"), true);
+    assert_eq!(args.get::<bool>("e"), true);
+
+    let args = parse_args!(parser: "-a", "-b", "-e");
+    assert_eq!(args.get::<bool>("a"), true);
+    assert_eq!(args.get::<bool>("b"), true);
+    assert_eq!(args.get::<bool>("c"), false);
+    assert_eq!(args.get::<bool>("d"), false);
+    assert_eq!(args.get::<bool>("e"), true);
+
+    let args = parse_args!(parser: "-abcde");
+    assert_eq!(args.get::<bool>("a"), true);
+    assert_eq!(args.get::<bool>("b"), true);
+    assert_eq!(args.get::<bool>("c"), true);
+    assert_eq!(args.get::<bool>("d"), true);
+    assert_eq!(args.get::<bool>("e"), true);
+}
