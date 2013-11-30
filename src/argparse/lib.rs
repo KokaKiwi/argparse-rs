@@ -5,7 +5,6 @@
     package_id = "argparse"
 )];
 
-#[author = "KokaKiwi <kokakiwi@kokakiwi.net>"];
 #[license = "MIT"];
 
 #[crate_type = "lib"];

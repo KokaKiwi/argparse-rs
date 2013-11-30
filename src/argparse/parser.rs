@@ -146,7 +146,7 @@ impl<'self> ArgumentParser<'self>
         }
         else if leading.starts_with("-")
         {
-            for c in leading.slice_from(1).iter()
+            for c in leading.slice_from(1).chars()
             {
                 let leading = format!("-{}", c);
 
