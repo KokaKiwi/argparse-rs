@@ -1,14 +1,14 @@
 
-pub enum ArgumentError<'self>
+pub enum ArgumentError<'a>
 {
     UnknownArgument(~str),
     NotEnoughArguments(~str),
-    MissingArgument(~[&'self str]),
+    MissingArgument(~[&'a str]),
     BadArgumentFormat(~str),
-    NotImplementedYet(&'self str),
+    NotImplementedYet(&'a str),
 }
 
-impl<'self> ToStr for ArgumentError<'self>
+impl<'a> ToStr for ArgumentError<'a>
 {
     fn to_str(&self) -> ~str
     {

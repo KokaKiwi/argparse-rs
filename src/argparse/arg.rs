@@ -1,20 +1,20 @@
 use value;
 
 #[deriving(Clone, Eq)]
-pub struct Argument<'self>
+pub struct Argument<'a>
 {
-    values: ~[&'self str],
-    opts: ArgumentOptions<'self>,
+    values: ~[&'a str],
+    opts: ArgumentOptions<'a>,
 }
 
 #[deriving(Clone, Eq)]
-pub struct ArgumentOptions<'self>
+pub struct ArgumentOptions<'a>
 {
     required: bool,
     ty: ArgumentType,
 
     default: Option<value::ArgumentValue>,
-    help: Option<&'self str>,
+    help: Option<&'a str>,
 }
 
 #[deriving(Clone, Eq)]
@@ -25,10 +25,10 @@ pub enum ArgumentType
     ArgTyInteger,
 }
 
-impl<'self> Argument<'self>
+impl<'a> Argument<'a>
 {
     #[allow(unused_mut)] #[inline]
-    pub fn new(values: ~[&'self str], mut opts: ArgumentOptions<'self>) -> Argument<'self>
+    pub fn new(values: ~[&'a str], mut opts: ArgumentOptions<'a>) -> Argument<'a>
     {
         let mut arg = Argument {
             values: values,
@@ -77,7 +77,7 @@ impl<'self> Argument<'self>
     }
 }
 
-impl<'self> ArgumentOptions<'self>
+impl<'a> ArgumentOptions<'a>
 {
     #[inline]
     pub fn default() -> ArgumentOptions

@@ -1,12 +1,10 @@
 #[link(
-    name = "argparse",
-    vers = "0.1.0",
-    uuid = "e21f6c0a-deac-4d66-8dc9-b116410d67df",
-    package_id = "argparse"
+    uuid = "e21f6c0a-deac-4d66-8dc9-b116410d67df"
 )];
 
 #[license = "MIT"];
 
+#[crate_id = "github.com/KokaKiwi/argparse#0.1.0"];
 #[crate_type = "lib"];
 
 pub use parser::ArgumentParser;

@@ -5,11 +5,11 @@ use value;
 use format::HelpFormatter;
 use format::default::DefaultHelpFormatter;
 
-pub struct ArgumentParser<'self>
+pub struct ArgumentParser<'a>
 {
-    args: ~[arg::Argument<'self>],
+    args: ~[arg::Argument<'a>],
 
-    description: Option<&'self str>,
+    description: Option<&'a str>,
 }
 
 struct ArgumentResults
@@ -18,7 +18,7 @@ struct ArgumentResults
     free: ~[~str],
 }
 
-impl<'self> ArgumentParser<'self>
+impl<'a> ArgumentParser<'a>
 {
     pub fn new() -> ArgumentParser
     {
@@ -29,12 +29,12 @@ impl<'self> ArgumentParser<'self>
         }
     }
 
-    pub fn add_argument(&mut self, arg: arg::Argument<'self>)
+    pub fn add_argument(&mut self, arg: arg::Argument<'a>)
     {
         self.args.push(arg);
     }
 
-    pub fn add_arguments(&mut self, args: &'self [arg::Argument<'self>])
+    pub fn add_arguments(&mut self, args: &'a [arg::Argument<'a>])
     {
         for arg in args.iter()
         {
@@ -42,7 +42,7 @@ impl<'self> ArgumentParser<'self>
         }
     }
 
-    pub fn parse_args(&self, mut args: &[~str]) -> Result<result::ArgumentResults, err::ArgumentError<'self>>
+    pub fn parse_args(&self, mut args: &[~str]) -> Result<result::ArgumentResults, err::ArgumentError<'a>>
     {
         let mut proxy = ArgumentResults::new();
 
